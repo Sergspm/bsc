@@ -1,0 +1,299 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require bootstrap/build/css/bootstrap.min.css
+ *= require bootstrap-select/dist/css/bootstrap-select.css
+ *= require seiyria-bootstrap-slider/dist/css/bootstrap-slider.css
+ *= require font-awesome/css/font-awesome.min.css
+ *= require_tree .
+ *= require_self
+ */
+
+
+
+.bsc-modal {
+    width: 700px;
+    margin: 0 auto;
+}
+.bsc-modal .modal-body {
+    overflow: visible;
+}
+.bsc-modal .right-col {
+    margin-left: 50px;
+}
+
+
+.bsc-select {
+    display: inline-block;
+}
+.bsc-select .bootstrap-select.btn-group .dropdown-menu li a {
+    padding-left: 30px;
+}
+.bsc-select .bootstrap-select.btn-group .dropdown-menu li.selected a span.check-mark {
+    display: block;
+    position: absolute;
+    left: 7px;
+    top: 5px;
+}
+.bsc-select .bootstrap-select > .dropdown-toggle,
+.bsc-select .bootstrap-select.open > .dropdown-toggle {
+    background: transparent;
+    border: none;
+    padding: 0 10px 1px 5px;
+    outline: none !important;
+    -webkit-box-shadow: none;
+       -moz-box-shadow: none;
+            box-shadow: none;
+}
+.bsc-select .bootstrap-select > .dropdown-toggle .bs-caret {
+    margin-left: -5px;
+}
+.bsc-select .bootstrap-select > .dropdown-toggle .filter-option {
+    color: #08c;
+}
+.bsc-select .bootstrap-select > .dropdown-toggle .filter-option:after {
+    content: "";
+    display: block;
+    border-bottom: 1px dotted #000;
+    margin-right: 7px;
+}
+
+.bsc-random-type-fields {
+    margin: 15px 0 20px 0;
+}
+.bsc-random-type-fields label {
+    margin-right: 5px;
+}
+.bsc-random-type-fields .bsc-select {
+    margin-right: 5px;
+}
+
+.bsc-select-type {
+    margin-bottom: 20px;
+}
+
+.bsc-slider {
+    padding-top: 20px;
+}
+.bsc-slider .slider-item .slide .slider-track-high {
+    background: #35A2D6;
+    border: 1px solid #5490B0;
+    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+       -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+            box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#55B4EA), to(#1992D9));
+    background-image: -webkit-linear-gradient(top, #55B4EA, #1992D9);
+    background-image: -moz-linear-gradient(top, #55B4EA, #1992D9);
+    background-image: -o-linear-gradient(top, #55B4EA, #1992D9);
+    background-image: linear-gradient(to bottom, #55B4EA, #1992D9);
+}
+.bsc-slider .slider-item .slide .slider-handle {
+    background: #FFF8F6;
+    -webkit-box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.4);
+       -moz-box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.4);
+            box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.4);
+    position: relative;
+}
+.bsc-slider .slider-item .slide .slider-handle:after {
+    content: "";
+    display: block;
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -5px 0 0 -5px;
+    -webkit-border-radius: 5px;
+       -moz-border-radius: 5px;
+            border-radius: 5px;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#E5ECEB), to(#F9F6F5));
+    background-image: -webkit-linear-gradient(top, #E5ECEB, #F9F6F5);
+    background-image: -moz-linear-gradient(top, #E5ECEB, #F9F6F5);
+    background-image: -o-linear-gradient(top, #E5ECEB, #F9F6F5);
+    background-image: linear-gradient(to bottom, #E5ECEB, #F9F6F5);
+}
+.bsc-slider .slider-item .slide .slider-selection {
+    background: transparent;
+}
+.bsc-slider .slider-item .slide .slider-track {
+    border: 1px solid #EDEDED;
+    -webkit-border-radius: 5px;
+       -moz-border-radius: 5px;
+            border-radius: 5px;
+    background: #FCFCFC;
+    -webkit-box-shadow: inset 0 2px 1px 0 rgba(0, 0, 0, 0.1);
+       -moz-box-shadow: inset 0 2px 1px 0 rgba(0, 0, 0, 0.1);
+            box-shadow: inset 0 2px 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.bsc-slider:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+.bsc-slider .slider-item {
+    float: left;
+    width: 12.5%;
+}
+.bsc-slider .slider-item .head {
+    padding: 0 4px;
+    text-align: center;
+    font-weight: 700;
+    margin-bottom: 10px
+}
+.bsc-slider .slider-item .head span {
+    display: block;
+    padding: 3px 0 2px 12px;
+}
+.bsc-slider .slider-item:hover .head span,
+.bsc-slider .slider-item.focused .head span {
+    display: none;
+}
+.bsc-slider .slider-item .head span:after {
+    content: "%";
+}
+.bsc-slider .slider-item .head input {
+    display: none;
+    font-weight: 700;
+    text-align: center;
+}
+.bsc-slider .slider-item:hover .head input,
+.bsc-slider .slider-item.focused .head input {
+    display: block;
+}
+.bsc-slider .slider-item .head .input-mini {
+    width: 100% !important;
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+    height: 25px;
+}
+.bsc-slider .slider-item .slide {
+    text-align: center;
+    padding-top: 5px;
+}
+.bsc-slider .slider-item:hover .slide {
+    background: #E6F9FD
+}
+.bsc-slider .slider-item .size {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 0.8em;
+    color: #5D5D5F
+}
+.bsc-slider .slider-item .size span {
+    display: block;
+    -webkit-transform: rotate(-45deg);
+       -moz-transform: rotate(-45deg);
+        -ms-transform: rotate(-45deg);
+         -o-transform: rotate(-45deg);
+            transform: rotate(-45deg);
+}
+.bsc-slider .slider-item .remove {
+    margin: 12px 0 0 3px;
+}
+.bsc-slider .slider-item .remove a {
+    text-decoration: none;
+    cursor: pointer;
+    color: #D5D5D5;
+}
+
+.bsc-sliders-outer .legend {
+    list-style: none;
+    margin: 10px 0 0 20px;
+}
+.bsc-sliders-outer .legend li:before {
+    content: "";
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border: 1px solid #000;
+    -webkit-border-radius: 3px;
+       -moz-border-radius: 3px;
+            border-radius: 3px;
+    margin-right: 5px;
+}
+.bsc-sliders-outer .legend li.allocated:before {
+    background: #13A6ED;
+}
+.bsc-sliders-outer .legend li.available:before {
+    background: #898989;
+}
+
+.bsc-sliders-outer .add-new-bin {
+    margin: 135px 0 0 0;
+    position: relative;
+    border-left: 1px solid #ccc;
+    padding: 0 0 0 20px;
+}
+.bsc-sliders-outer .add-new-bin:before {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 1px solid transparent;
+    border-top-color: #ccc;
+    border-left-color: #ccc;
+    -webkit-transform: rotate(-45deg);
+       -moz-transform: rotate(-45deg);
+        -ms-transform: rotate(-45deg);
+         -o-transform: rotate(-45deg);
+            transform: rotate(-45deg);
+    top: 23px;
+    left: -11px;
+    background: #fff;
+}
+.bsc-sliders-outer .add-new-bin .size {
+    margin-bottom: 15px;
+}
+.bsc-sliders-outer .add-new-bin .size input {
+    width: 40px;
+    margin: 0 7px 0 15px
+}
+.bsc-sliders-outer .add-new-bin .button-add {
+    padding: 0 0 0 46px;
+}
+
+.slider-track-available {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 5;
+    background: #ddd;
+    -webkit-border-radius: 5px;
+       -moz-border-radius: 5px;
+            border-radius: 5px;
+    -webkit-box-shadow: inset 0 2px 2px rgba(0, 0, 0, 0.2);
+       -moz-box-shadow: inset 0 2px 2px rgba(0, 0, 0, 0.2);
+            box-shadow: inset 0 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+.bsc-notify {
+    display: inline-block;
+    margin: 0 auto;
+    position: fixed;
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+    z-index: 9999;
+    top: 20px;
+    right: 20px;
+    -webkit-animation-iteration-count: 1;
+       -moz-animation-iteration-count: 1;
+         -o-animation-iteration-count: 1;
+            animation-iteration-count: 1;
+}
+
+.bsc-configuration .modal-body {
+    overflow: visible;
+}

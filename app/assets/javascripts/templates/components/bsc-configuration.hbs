@@ -1,0 +1,127 @@
+<div class="modal-header">
+    <h3>
+        {{#if isEdit}}
+            Edit configuration
+        {{else}}
+            Add new configuration
+        {{/if}}
+    </h3>
+</div>
+
+<div class="modal-body">
+
+    <div class="bsc-select-type">
+        <span>Use</span>
+        <div class="bsc-select">
+            {{view "select"
+                content=typesLabels
+                optionValuePath="content.type"
+                optionLabelPath="content.label"
+                value=model.confType
+                data-toggle="select"}}
+        </div>
+        {{#if model.isConstantType}}
+            <span>of</span>
+            <div class="bsc-select">
+                {{view "select"
+                    content=constantSizesList
+                    optionValuePath="content.value"
+                    optionLabelPath="content.label"
+                    value=model.constantSize
+                    data-toggle="select"}}
+            </div>
+        {{/if}}
+    </div>
+
+    {{#if model.isRandomType}}
+        <div class="bsc-random-type-fields form-inline">
+            <label>From</label>
+            {{input value=model.randomFromValue type="text" class="input-mini"}}
+            <div class="bsc-select">
+                {{view "select"
+                    content=unitsList
+                    optionValuePath="content.value"
+                    optionLabelPath="content.label"
+                    value=model.randomFromUnit
+                    data-toggle="select"}}
+            </div>
+            <label>to</label>
+            {{input value=model.randomToValue type="text" class="input-mini"}}
+            <div class="bsc-select">
+                {{view "select"
+                    content=unitsList
+                    optionValuePath="content.value"
+                    optionLabelPath="content.label"
+                    value=model.randomToUnit
+                    data-toggle="select"}}
+            </div>
+            <label>per block</label>
+        </div>
+    {{/if}}
+
+    {{#if model.isBinType}}
+        <div class="bsc-sliders-outer row">
+            <div class="span5">
+                <div class="bsc-slider">
+                    {{#each slide in model.sliders}}
+                        {{bsc-slider model=slide available=availableForUse maximum=setSliderMaximum onRemove="onSlideRemove" onValueChange="onSliderValueChange"}}
+                    {{/each}}
+                </div>
+            </div>
+
+            <div class="span3 right-col">
+                <div class="set-to form-inline">
+                    <label>Set slider maximum to:</label>
+                    <div class="bsc-select">
+                        {{view "select"
+                            content=setSliderMaximumOptions
+                            optionValuePath="content.value"
+                            optionLabelPath="content.label"
+                            value=setSliderMaximum
+                            data-toggle="select"}}
+                    </div>
+                </div>
+                <ul class="legend">
+                    <li class="allocated">Allocated: <strong>{{totalAllocated}}%</strong></li>
+                    <li class="available">Available for use: <strong>{{availableForUse}}%</strong></li>
+                    <li class="unavailable">Unavailable for use</li>
+                </ul>
+                <div class="add-new-bin">
+                    <div class="size form-inline">
+                        <label>Size</label>
+                        {{input value=addBinValue type="text" class="input-mini"}}
+                        <div class="bsc-select">
+                            {{view "select"
+                                content=unitsList
+                                optionValuePath="content.value"
+                                optionLabelPath="content.label"
+                                value=addBinUnit
+                                data-toggle="select"}}
+                        </div>
+                    </div>
+                    <div class="button-add">
+                        <button class="btn disabled" {{bind-attr class="isAddBinButtonDisabled:disabled"}} {{action "addBin" on="click"}}>
+                            <i class="fa fa-plus"></i>
+                            Add Bin
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    {{/if}}
+
+</div>
+
+<div class="modal-footer">
+    <button class="btn" {{action "goBack" on="click"}}>Cancel</button>
+    <button class="btn btn-primary" {{action "saveConfiguration" on="click"}}>
+        {{#if isEdit}}
+            Save changes
+        {{else}}
+            Create configuration
+        {{/if}}
+    </button>
+</div>
+
+{{bsc-notify notifyType=notifyType notifyMessage=notifyMessage notifyExtra=notifyExtra}}

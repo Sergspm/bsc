@@ -1,0 +1,26 @@
+
+{{#if isError}}
+    <div class="col-xs-11 col-sm-4 alert alert-danger animated fadeInDown bsc-notify">
+        <span data-notify="icon"></span>
+        <span data-notify="title"></span>
+        <span data-notify="message">
+            {{notifyMessage}}
+            {{#each extra in notifyExtra}}
+                <em>{{extra}}</em><br>
+            {{/each}}
+        </span>
+    </div>
+{{/if}}
+
+{{#if isSuccess}}
+    <div class="col-xs-11 col-sm-4 alert alert-success animated fadeInDown bsc-notify">
+        <span data-notify="icon"></span>
+        <span data-notify="title"></span>
+        <span data-notify="message">
+            {{notifyMessage}}
+            {{#each extra in notifyExtra}}
+                <em>{{extra}}</em><br>
+            {{/each}}
+        </span>
+    </div>
+{{/if}}

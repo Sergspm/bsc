@@ -1,0 +1,42 @@
+<table class="bsc-table table table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Configuration</th>
+            <th>AVG</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each row in model}}
+            <tr>
+                <td>{{incr _view.contentIndex}}</td>
+                <td>{{row.readableName}}</td>
+                <td>{{row.avg}}</td>
+                <td>
+                    {{#link-to 'configurations.edit' row.id class="btn" title="Edit configuration" data-toggle="tooltip"}}<i class="fa fa-edit"></i>{{/link-to}}
+                    <button class="btn remove" title="Delete configuration" data-toggle="tooltip" {{action "confirmRemoveConfiguration" row on="click"}}><i class="fa fa-times"></i></button>
+                </td>
+            </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+{{#if hasConfirmedToRemove}}
+    <div class="modal hide fade in" style="display: block;">
+        <div class="modal-header">
+            <h3 id="myModalLabel">Remove configuration</h3>
+        </div>
+        <div class="modal-body">
+            <h5>Do you want to remove this configuration?</h5>
+            <p><em>{{confirmedToRemove.readableName}}</em></p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" {{action "stopRemove" on="click"}}>Cancel</button>
+            <button class="btn btn-danger" {{action "removeConfiguration" on="click"}}>Remove</button>
+        </div>
+    </div>
+    <div class="modal-backdrop fade in"></div>
+{{/if}}
+
+{{bsc-notify notifyType=notifyType notifyMessage=notifyMessage notifyExtra=notifyExtra}}

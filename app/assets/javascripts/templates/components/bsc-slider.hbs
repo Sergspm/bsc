@@ -1,0 +1,15 @@
+<div class="slider-item" {{bind-attr class="focused:focused"}}>
+    <div class="head">
+        <span>{{model.value}}</span>
+        {{input value=model.value type="text" class="input-mini" focus-out="focusOut" focus-in="focusIn" }}
+    </div>
+    <div class="slide">
+        {{input value=model.value type="text" class="slide-germ"}}
+        <div class="remove">
+            <a class="glyphicon glyphicon-remove" {{action "onRemove" on="click"}}></a>
+        </div>
+    </div>
+    <div class="size">
+        <span>{{model.sizeLabel}}</span>
+    </div>
+</div>
