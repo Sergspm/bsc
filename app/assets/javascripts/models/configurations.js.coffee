@@ -17,6 +17,12 @@ App.Configuration = DS.Model.extend
     addSlider: (conf) ->
         @get('sliders').pushObject(@store.createRecord('slider', conf))
 
+    getCanonicalSlidersSizes: () ->
+        factor = { b: 1, kb: 1024, mb: 1024 * 1024, gb: 1024 * 1024 * 1024 }
+        @get('sliders').map((slider) ->
+            slider.get('size') * factor[slider.get('unit')]
+        )
+
     readableName: ( () ->
         name = ''
         units = { 'b': 'Bytes', 'kb': 'KB', 'mb': 'MB', 'gb': 'GB' }

@@ -150,7 +150,21 @@ App.BscConfigurationComponent = Ember.Component.extend
         @recheckAvailable()
     ).observes('setSliderMaximum')
 
-    isAddBinButtonDisabled: Ember.computed.equal('addBinValue', '')
+    isAddBinButtonDisabled: (() ->
+        size = @get('addBinValue')
+        unit = @get('addBinUnit')
+        unless size is ''
+            unless @get('model.sliders').length >= @get('maxSliders')
+                factor = { b: 1, kb: 1024, mb: 1024 * 1024, gb: 1024 * 1024 * 1024 }
+                if @get('model').getCanonicalSlidersSizes().indexOf(size * factor[unit]) is -1
+                    return false
+                else
+                    return true
+            else
+                return true
+        else
+            return true
+    ).property('addBinValue', 'addBinUnit', 'model.sliders.[]')
 
     actions:
         goBack: () ->
@@ -187,12 +201,18 @@ App.BscConfigurationComponent = Ember.Component.extend
         addBin: () ->
             unless (size = @get('addBinValue')) is ''
                 unless @get('model.sliders').length >= @get('maxSliders')
-                    @get('model').addSlider({
-                        size: size
-                        unit: @get('addBinUnit')
-                        value: 0
-                    })
-                    @set('addBinValue', '')
+                    unit = @get('addBinUnit')
+                    factor = { b: 1, kb: 1024, mb: 1024 * 1024, gb: 1024 * 1024 * 1024 }
+                    if @get('model').getCanonicalSlidersSizes().indexOf(size * factor[unit]) is -1
+                        @get('model').addSlider({
+                            size: size
+                            unit: @get('addBinUnit')
+                            value: 0
+                        })
+                        @set('addBinValue', '')
+                    else
+                        @set('notifyType', 'error')
+                        @set('notifyMessage', 'You can not set already existed size')
                 else
                     @set('notifyType', 'error')
                     @set('notifyMessage', 'The limit of sliders has been reached')
