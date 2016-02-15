@@ -51,7 +51,6 @@ App.BscConfigurationComponent = Ember.Component.extend
     ]
 
     setSliderMaximumOptions: [
-        { value: 0,   label: '0%'   }
         { value: 10,  label: '10%'  }
         { value: 25,  label: '25%'  }
         { value: 50,  label: '50%'  }
@@ -90,6 +89,12 @@ App.BscConfigurationComponent = Ember.Component.extend
         @set('totalAllocated', total)
         @set('availableForUse', available)
         currentSlider.setValue(currentSlider.getValue() - delta) if delta > 0 && currentSlider
+
+    availableForUseComputed: (() ->
+        available = @get('availableForUse')
+        percentage = @get('setSliderMaximum')
+        parseInt(available * (100 / percentage))
+    ).property('setSliderMaximum', 'availableForUse')
 
     changeConfigurationType: ( () ->
         Ember.run.scheduleOnce('afterRender', @, () ->

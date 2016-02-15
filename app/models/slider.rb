@@ -6,13 +6,6 @@ class Slider
   field :unit, type: String
   field :value, type: Integer
 
-
-  def __bson_dump__(io = "", key = nil)
-    as_document.__bson_dump__(io, key)
-  end
+  embedded_in :bin_configuration
 
 end
-
-
-
-

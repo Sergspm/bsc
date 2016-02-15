@@ -64,7 +64,7 @@
             <div class="span5">
                 <div class="bsc-slider">
                     {{#each slide in model.sliders}}
-                        {{bsc-slider model=slide available=availableForUse maximum=setSliderMaximum onRemove="onSlideRemove" onValueChange="onSliderValueChange"}}
+                        {{bsc-slider model=slide available=availableForUseComputed maximum=setSliderMaximum onRemove="onSlideRemove" onValueChange="onSliderValueChange"}}
                     {{/each}}
                 </div>
             </div>

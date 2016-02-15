@@ -2,6 +2,7 @@ class BinConfiguration
 
   include Mongoid::Document
   store_in collection: "bin_configurations"
+  embeds_many :sliders
 
   validates :conf_type, inclusion: { in: %w(constant random bins), message: "Unknown type of configuration: %{value}" }
   validates :random_from_unit, inclusion: { in: %w(b kb mb gb), message: "Unknown unit of random from unit: %{value}" }
@@ -15,9 +16,4 @@ class BinConfiguration
   field :random_to_value, type: Integer
   field :sliders, type: Array
 
-  def sliders=(sliders)
-    list = []
-    sliders.each { |data| list << Slider.new(data) }
-    write_attribute(:sliders, list)
-  end
 end

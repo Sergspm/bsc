@@ -52,7 +52,11 @@ App.BscSliderComponent = Ember.Component.extend
     ).observes('model.value')
 
     changeMaximum: ( () ->
-        @get('slideGerm').slider('setAttribute', 'max', @get('maximum'))
+        max = @get('maximum')
+        @get('slideGerm').slider('setAttribute', 'max', max)
+        value = @get('model.value')
+        value = max if value > max
+        @setValue(value)
     ).observes('maximum')
 
     actions:
