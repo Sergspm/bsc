@@ -19,6 +19,7 @@ App.BscSliderComponent = Ember.Component.extend
     slideGerm: null
 
     didInsertElement: () ->
+        self = @
         @set('slideGerm', @$().find('.slide-germ'))
         @get('slideGerm').slider({
             reversed: true
@@ -28,7 +29,9 @@ App.BscSliderComponent = Ember.Component.extend
             value: parseInt @get('model.value')
             orientation: 'vertical'
             tooltip: 'hide'
-        }).slider('setAvailable', @get('available'))
+        }).slider('setAvailable', @get('available')).on('slideStart', () ->
+            self.set('focused', false)
+        )
 
     updateValue: () ->
         @setValue(@get('model.value')) if @get('focused')

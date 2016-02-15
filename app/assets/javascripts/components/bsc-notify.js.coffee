@@ -28,7 +28,7 @@ App.BscNotifyComponent = Ember.Component.extend
                 self.set('notifyMessage', '')
                 self.set('notifyExtra', [])
         ), @get('delay'))
-    ).observes('notifyType', 'notifyMessage', 'notifyExtra.@each')
+    ).observes('notifyType', 'notifyMessage', 'notifyExtra.[]')
 
     isError: Ember.computed.equal('notifyType', 'error')
 
