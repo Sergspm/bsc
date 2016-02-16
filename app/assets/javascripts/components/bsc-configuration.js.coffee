@@ -67,11 +67,16 @@ App.BscConfigurationComponent = Ember.Component.extend
         @initSelectPicker()
         @recheckAvailable()
 
-    initSelectPicker: () ->
-        @$().find('[data-toggle="select"]').selectpicker
+    initSelectPicker: (reload) ->
+        select = @$().find('[data-toggle="select"]')
+        select.selectpicker
             size: 10
             showIcon: true
             width: 'fit'
+        if reload
+            Ember.run.scheduleOnce('afterRender', @, () ->
+                select.selectpicker('refresh')
+            )
 
     storeRandValues: () ->
         model = @get('model')
@@ -128,6 +133,7 @@ App.BscConfigurationComponent = Ember.Component.extend
 
         if fromCanonical > toCanonical
             model.set(propertyName, @get(propertyName))
+            @initSelectPicker(true)
             @set('notifyType', 'error')
             @set('notifyMessage', 'The min value must be less than max value')
 
