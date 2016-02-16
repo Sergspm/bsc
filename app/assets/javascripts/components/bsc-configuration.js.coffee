@@ -173,6 +173,8 @@ App.BscConfigurationComponent = Ember.Component.extend
                 @get('model.sliders').forEach((slider) ->
                     slider.rollback()
                 )
+            else
+                @get('model').deleteRecord()
             @sendAction('onGoBack', @)
 
         onSlideRemove: (slider) ->
