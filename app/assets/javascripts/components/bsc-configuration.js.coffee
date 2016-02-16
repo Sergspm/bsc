@@ -196,20 +196,31 @@ App.BscConfigurationComponent = Ember.Component.extend
 
         saveConfiguration: () ->
             self = @
-            @get('model').save().then(( (configuration) ->
-                self.sendAction('onGoBack', self)
-                self.set('notifyType', 'success')
-                self.set('notifyMessage', 'Configuration successfully saved')
-            ), ( (xhr) ->
-                list = []
-                for field, messages of xhr.responseJSON.errors
-                    messages.forEach((message) ->
-                        list.push(message)
-                    )
-                self.set('notifyType', 'error')
-                self.set('notifyMessage', 'Fail saving configuration:')
-                self.set('notifyExtra', list)
-            ))
+            percents = 0
+            if @get('model.isBinType')
+                @get('model.sliders').forEach((slider) ->
+                    percents += parseInt(slider.get('value'))
+                )
+            else
+                percents = 100
+            if percents is 100
+                @get('model').save().then(( (configuration) ->
+                    self.sendAction('onGoBack', self)
+                    self.set('notifyType', 'success')
+                    self.set('notifyMessage', 'Configuration successfully saved')
+                ), ( (xhr) ->
+                    list = []
+                    for field, messages of xhr.responseJSON.errors
+                        messages.forEach((message) ->
+                            list.push(message)
+                        )
+                    self.set('notifyType', 'error')
+                    self.set('notifyMessage', 'Fail saving configuration:')
+                    self.set('notifyExtra', list)
+                ))
+            else
+                @set('notifyType', 'error')
+                @set('notifyMessage', 'Total percentage must be a 100')
 
         addBin: () ->
             unless (size = @get('addBinValue')) is ''
