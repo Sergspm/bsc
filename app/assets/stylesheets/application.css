@@ -16,7 +16,9 @@
  *= require_self
  */
 
-
+label {
+    cursor: default;
+}
 
 .bsc-modal {
     width: 700px;
