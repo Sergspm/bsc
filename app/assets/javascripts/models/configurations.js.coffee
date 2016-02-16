@@ -65,6 +65,18 @@ App.Configuration = DS.Model.extend
                 return toReadableAvg(sum / sumVal || 0)
     ).property('confType', 'sliders.@each.{size,unit,value}', 'randomFromValue', 'randomFromUnit', 'randomToValue', 'randomToUnit')
 
+    isBinValid: (() ->
+        percents = 0
+        @get('sliders').forEach((slider) ->
+            percents += parseInt(slider.get('value'))
+        )
+        percents is 100
+    ).property('sliders.[]')
+
+    isRandomValid: (() ->
+        @get('randomFromValue') > 0 && @get('randomToValue') > 0
+    ).property('randomFromValue', 'randomToValue')
+
     isConstantType: Ember.computed.equal('confType', 'constant')
 
     isRandomType: Ember.computed.equal('confType', 'random')

@@ -195,15 +195,13 @@ App.BscConfigurationComponent = Ember.Component.extend
             @recheckAvailable(currentSlider)
 
         saveConfiguration: () ->
-            self = @
-            percents = 0
+            errorMessage = null
             if @get('model.isBinType')
-                @get('model.sliders').forEach((slider) ->
-                    percents += parseInt(slider.get('value'))
-                )
-            else
-                percents = 100
-            if percents is 100
+                errorMessage = 'Total percentage must be a 100' unless @get('model.isBinValid')
+            if @get('model.isRandomType')
+                errorMessage = 'Random must have a non zero values' unless @get('model.isRandomValid')
+            unless errorMessage
+                self = @
                 @get('model').save().then(( (configuration) ->
                     self.sendAction('onGoBack', self)
                     self.set('notifyType', 'success')
@@ -220,7 +218,7 @@ App.BscConfigurationComponent = Ember.Component.extend
                 ))
             else
                 @set('notifyType', 'error')
-                @set('notifyMessage', 'Total percentage must be a 100')
+                @set('notifyMessage', errorMessage)
 
         addBin: () ->
             unless (size = @get('addBinValue')) is ''
