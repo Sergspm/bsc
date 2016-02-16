@@ -62,9 +62,11 @@ App.BscSliderComponent = Ember.Component.extend
         @setValue(value)
     ).observes('maximum')
 
+    deleteSlider: () ->
+        @get('model').deleteRecord()
+
     actions:
         onRemove: () ->
-            @get('model').deleteRecord()
             @sendAction('onRemove', @)
 
         focusOut: () ->

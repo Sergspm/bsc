@@ -176,7 +176,12 @@ App.BscConfigurationComponent = Ember.Component.extend
             @sendAction('onGoBack', @)
 
         onSlideRemove: (slider) ->
-            @recheckAvailable()
+            if @get('model.sliders').length > 1
+                slider.deleteSlider()
+                @recheckAvailable()
+            else
+                @set('notifyType', 'error')
+                @set('notifyMessage', 'You\'re can\'t remove all sliders. Add at least one new slider to remove first.')
 
         onSliderValueChange: (currentSlider) ->
             @recheckAvailable(currentSlider)
