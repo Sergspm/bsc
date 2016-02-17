@@ -50,20 +50,14 @@ App.BscConfigurationComponent = Ember.Component.extend
         { value: 'gb', label: 'GB'    }
     ]
 
-    setSliderMaximumOptions: [
-        { value: 10,  label: '10%'  }
-        { value: 25,  label: '25%'  }
-        { value: 50,  label: '50%'  }
-        { value: 75,  label: '75%'  }
-        { value: 90,  label: '90%'  }
-        { value: 100, label: '100%' }
-    ]
+    maxSlidersValue: 0
 
     onInit: ( () ->
         @storeRandValues()
     ).on 'init'
 
     didInsertElement: () ->
+        @set('maxSlidersValue', @get('model').maxSlidersValue())
         @initSelectPicker()
         @recheckAvailable()
 
@@ -94,6 +88,22 @@ App.BscConfigurationComponent = Ember.Component.extend
         @set('totalAllocated', total)
         @set('availableForUse', available)
         currentSlider.setValue(currentSlider.getValue() - delta) if delta > 0 && currentSlider
+
+    setSliderMaximumOptions: ( () ->
+        Ember.run.scheduleOnce('afterRender', @, () ->
+            @initSelectPicker(true)
+        )
+        max = @get('maxSlidersValue')
+        [
+            { label: '100%', value: 100 }
+            { label: '80%',  value: 80  }
+            { label: '60%',  value: 60  }
+            { label: '40%',  value: 40  }
+            { label: '20%',  value: 20  }
+        ].map( (item) ->
+            Ember.Object.create({ label: item.label,  value: item.value, disabled: item.value < max })
+        )
+    ).property('maxSlidersValue')
 
     availableForUseComputed: (() ->
         available = @get('availableForUse')
@@ -192,6 +202,7 @@ App.BscConfigurationComponent = Ember.Component.extend
                 @set('notifyMessage', 'You\'re can\'t remove all sliders. Add at least one new slider to remove first.')
 
         onSliderValueChange: (currentSlider) ->
+            @set('maxSlidersValue', @get('model').maxSlidersValue())
             @recheckAvailable(currentSlider)
 
         saveConfiguration: () ->

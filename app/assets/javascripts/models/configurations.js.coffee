@@ -23,6 +23,14 @@ App.Configuration = DS.Model.extend
             slider.get('size') * factor[slider.get('unit')]
         )
 
+    maxSlidersValue: () ->
+        max = 0
+        @get('sliders').forEach( (slider) ->
+            value = parseInt(slider.get('value'))
+            max = value if value > max
+        )
+        max
+
     readableName: ( () ->
         name = ''
         units = { 'b': 'Bytes', 'kb': 'KB', 'mb': 'MB', 'gb': 'GB' }
@@ -126,3 +134,11 @@ App.ConfigurationSerializer = App.ApplicationSerializer.extend(DS.EmbeddedRecord
         }
     }
 })
+
+
+Ember.SelectOption.reopen
+    attributeBindings: ['value', 'selected', 'disabled']
+    disabled: (() ->
+        content = @get('content')
+        content.disabled || false
+    ).property('content')
