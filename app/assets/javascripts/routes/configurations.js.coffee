@@ -21,8 +21,10 @@ App.ConfigurationsCreateRoute = Ember.Route.extend
         configuration
 
     actions:
-        goToIndex: () ->
-            @transitionTo('configurations.index')
+        goToIndex: (scope, cb) ->
+            @transitionTo('configurations.index').then( () ->
+                cb.call(scope) if typeof cb is 'function'
+            )
 
 
 App.ConfigurationsEditRoute = App.ConfigurationsCreateRoute.extend

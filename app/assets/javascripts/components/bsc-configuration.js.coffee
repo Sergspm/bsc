@@ -52,6 +52,8 @@ App.BscConfigurationComponent = Ember.Component.extend
 
     maxSlidersValue: 0
 
+    deletedSliders: []
+
     onInit: ( () ->
         @storeRandValues()
     ).on 'init'
@@ -185,16 +187,21 @@ App.BscConfigurationComponent = Ember.Component.extend
     actions:
         goBack: () ->
             if @get('isEdit')
-                @get('model').rollback()
-                @get('model.sliders').forEach((slider) ->
-                    slider.rollback()
+                @sendAction('onGoBack')
+                Ember.run.once(@, () ->
+                    @get('model').rollback()
+                    @get('deletedSliders').forEach( (slider) ->
+                        slider.rollback()
+                    )
+                    @set('deletedSliders', [])
                 )
             else
                 @get('model').deleteRecord()
-            @sendAction('onGoBack', @)
+                @sendAction('onGoBack', @)
 
         onSlideRemove: (slider) ->
             if @get('model.sliders').length > 1
+                @get('deletedSliders').pushObject(slider.get('model'))
                 slider.deleteSlider()
                 @recheckAvailable()
             else
@@ -208,9 +215,9 @@ App.BscConfigurationComponent = Ember.Component.extend
         saveConfiguration: () ->
             errorMessage = null
             if @get('model.isBinType')
-                errorMessage = 'Total percentage must be a 100' unless @get('model.isBinValid')
+                errorMessage = 'Total percentage must be a 100' unless @get('model').isBinValid()
             if @get('model.isRandomType')
-                errorMessage = 'Random must have a non zero values' unless @get('model.isRandomValid')
+                errorMessage = 'Random must have a non zero values' unless @get('model').isRandomValid()
             unless errorMessage
                 self = @
                 @get('model').save().then(( (configuration) ->
