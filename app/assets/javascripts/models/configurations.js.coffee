@@ -32,16 +32,18 @@ App.Configuration = DS.Model.extend
         max
 
     readableName: ( () ->
-        name = ''
         units = { 'b': 'Bytes', 'kb': 'KB', 'mb': 'MB', 'gb': 'GB' }
         switch @get('confType')
             when 'constant'
-                name = 'Constant: ' + @get('constantSize').toUpperCase()
+                return 'Constant: ' + @get('constantSize').toUpperCase()
             when 'random'
-                name = "Random: from #{@get('randomFromValue')} #{units[@get('randomFromUnit')]} to #{@get('randomToValue')} #{units[@get('randomToUnit')]}"
+                return "Random: from #{@get('randomFromValue')} #{units[@get('randomFromUnit')]} to #{@get('randomToValue')} #{units[@get('randomToUnit')]}"
             when 'bins'
-                name = @get('sliders').map((slide) -> "#{slide.get('size')} #{units[slide.get('unit')]} - #{slide.get('value')}%").join(', ')
-        name
+                bins = []
+                @get('sliders').forEach( (slide) ->
+                    bins.push("#{slide.get('size')} #{units[slide.get('unit')]} - #{slide.get('value')}%") if slide.get('value') > 0
+                )
+                return bins.join(', ')
     ).property('confType', 'sliders.@each.{size,unit,value}')
 
     avg: ( -> # сумма(размер * процент) / сумма(процент)
