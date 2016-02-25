@@ -13,11 +13,6 @@ App.BscConfigurationComponent = Ember.Component.extend
     addBinValue: ''
     addBinUnit: 'kb'
 
-    randomFromValue: null
-    randomToValue: null
-    randomFromUnit: null
-    randomToUnit: null
-
     notifyType: ''
     notifyMessage: ''
     notifyExtra: []
@@ -119,38 +114,11 @@ App.BscConfigurationComponent = Ember.Component.extend
         )
     ).observes('model.confType')
 
-    changeRndFromVal: ( (view, propertyName) ->
-        model = @get('model')
-
-        factors = { b: 1, kb: 1024, mb: 1024 * 1024, gb: 1024 * 1024 * 1024 }
-
-        propertyName = propertyName.split('.')[1]
-
-        fromValue = parseInt model.get('randomFromValue')
-        toValue = parseInt model.get('randomToValue')
-        fromUnit = model.get('randomFromUnit')
-        toUnit = model.get('randomToUnit')
-
-        fromValue = 0 if !isFinite(fromValue) || fromValue < 0
-
-        model.set('randomFromValue', fromValue)
-
-        fromCanonical = fromValue * factors[fromUnit]
-
-        toValue = Math.ceil(fromCanonical / factors[toUnit]) if !isFinite(toValue) || toValue < 0
-
-        model.set('randomToValue', toValue)
-
-        toCanonical = toValue * factors[toUnit]
-
-        if fromCanonical > toCanonical
-            model.set(propertyName, @get(propertyName))
-            @initSelectPicker(true)
-            @set('notifyType', 'error')
-            @set('notifyMessage', 'The min value must be less than max value')
-
-        @storeRandValues()
-    ).observes('model.randomFromValue', 'model.randomToValue', 'model.randomFromUnit', 'model.randomToUnit')
+    changeRndVal: ( (view, propertyName) ->
+        value = @get(propertyName)
+        parsed = parseInt(value) || 0
+        @set(propertyName, parsed) unless value + '' is parsed + ''
+    ).observes('model.randomFromValue', 'model.randomToValue')
 
     changeAddBinValue: ( (view, property) ->
         value = parseInt(@get(property))
@@ -217,7 +185,7 @@ App.BscConfigurationComponent = Ember.Component.extend
             if @get('model.isBinType')
                 errorMessage = 'Total percentage must be a 100' unless @get('model').isBinValid()
             if @get('model.isRandomType')
-                errorMessage = 'Random must have a non zero values' unless @get('model').isRandomValid()
+                errorMessage = 'Random must have a non zero values and "from" must be greater than "to"' unless @get('model').isRandomValid()
             unless errorMessage
                 self = @
                 @get('model').save().then(( (configuration) ->

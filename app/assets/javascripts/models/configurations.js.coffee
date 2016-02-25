@@ -82,7 +82,14 @@ App.Configuration = DS.Model.extend
         percents is 100
 
     isRandomValid: () ->
-        @get('randomFromValue') > 0 && @get('randomToValue') > 0
+        factors = { b: 1, kb: 1024, mb: 1024 * 1024, gb: 1024 * 1024 * 1024 }
+        fromValue = parseInt @get('randomFromValue')
+        toValue = parseInt @get('randomToValue')
+        fromUnit = @get('randomFromUnit')
+        toUnit = @get('randomToUnit')
+        fromCanonical = fromValue * factors[fromUnit]
+        toCanonical = toValue * factors[toUnit]
+        fromValue > 0 && toValue > 0 && fromCanonical <= toCanonical
 
     isConstantType: Ember.computed.equal('confType', 'constant')
 
