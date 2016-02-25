@@ -121,9 +121,9 @@ App.BscConfigurationComponent = Ember.Component.extend
     ).observes('model.randomFromValue', 'model.randomToValue')
 
     changeAddBinValue: ( (view, property) ->
-        value = parseInt(@get(property))
-        value = '' unless isFinite(value)
-        @set(property, value)
+        value = @get(property)
+        parsed = parseInt(value) || 0
+        @set(property, parsed) unless value + '' is parsed + ''
     ).observes('addBinValue')
 
     watchInSliders: (() ->
