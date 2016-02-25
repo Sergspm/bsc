@@ -61,7 +61,7 @@ App.BscConfigurationComponent = Ember.Component.extend
     initSelectPicker: (reload) ->
         select = @$().find('[data-toggle="select"]')
         select.selectpicker
-            size: 10
+            size: 20
             showIcon: true
             width: 'fit'
         if reload
