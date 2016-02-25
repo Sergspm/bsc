@@ -30,8 +30,12 @@ App.BscTableComponent = Ember.Component.extend
             self = @
             configuration = @get('confirmedToRemove')
             configuration.deleteRecord()
-            configuration.save().then( ->
+            configuration.save().then( (() ->
                 self.set('notifyType', 'success')
                 self.set('notifyMessage', 'Configuration successfully deleted')
                 self.set('confirmedToRemove', null)
-            )
+            ), ( () ->
+                self.set('notifyType', 'error')
+                self.set('notifyMessage', 'The configuration was deleted earlier')
+                self.set('confirmedToRemove', null)
+             ))

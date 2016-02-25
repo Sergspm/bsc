@@ -67,9 +67,10 @@ App.Configuration = DS.Model.extend
             when 'bins'
                 sum = 0
                 sumVal = 0
-                @get('sliders').forEach (slide) ->
+                @get('sliders').forEach( (slide) ->
                     sum += slide.get('size') * sizes[slide.get('unit')] * slide.get('value')
                     sumVal += slide.get('value')
+                )
                 return toReadableAvg(sum / sumVal || 0)
     ).property('confType', 'sliders.@each.{size,unit,value}', 'randomFromValue', 'randomFromUnit', 'randomToValue', 'randomToUnit')
 
