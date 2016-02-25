@@ -56,7 +56,7 @@ App.Configuration = DS.Model.extend
                 if cValue == null
                     cValue = value
                     cUnit = unit
-                if avg_val <= value then break
+                if avg_val < value then break
                 cValue = value
                 cUnit = unit
             Math.round(avg_val / cValue) + ' ' + units[cUnit]
@@ -65,6 +65,7 @@ App.Configuration = DS.Model.extend
             when 'constant'
                 return @get('constantSize').toUpperCase()
             when 'random'
+                console.log((@get('randomFromValue') * sizes[@get('randomFromUnit')] + @get('randomToValue') * sizes[@get('randomToUnit')]) / 2)
                 return toReadableAvg((@get('randomFromValue') * sizes[@get('randomFromUnit')] + @get('randomToValue') * sizes[@get('randomToUnit')]) / 2)
             when 'bins'
                 sum = 0
