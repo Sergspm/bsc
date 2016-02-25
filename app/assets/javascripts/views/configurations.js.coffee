@@ -13,3 +13,6 @@ App.ConfigurationsView = Ember.View.extend
 
 App.ConfigurationsCreateView = Ember.View.extend
     classNames: [ 'bsc-modal' ]
+
+App.ConfigurationsEditView = Ember.View.extend
+    classNames: [ 'bsc-modal' ]
