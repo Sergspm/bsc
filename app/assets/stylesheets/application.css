@@ -63,6 +63,7 @@ label {
 }
 .bsc-select .bootstrap-select > .dropdown-toggle .filter-option {
     color: #08c;
+    font-weight: 700;
 }
 .bsc-select .bootstrap-select > .dropdown-toggle .filter-option:after {
     content: "";
