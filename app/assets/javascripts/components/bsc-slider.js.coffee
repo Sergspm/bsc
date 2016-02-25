@@ -51,6 +51,7 @@ App.BscSliderComponent = Ember.Component.extend
     ).observes('available')
 
     changeValue: ( () ->
+        @set('model.value', @get('maximum')) if @get('focused') && @get('model.value') > @get('maximum')
         @updateValue()
     ).observes('model.value')
 
