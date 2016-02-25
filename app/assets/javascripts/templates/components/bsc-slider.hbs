@@ -1,4 +1,4 @@
-<div class="slider-item" {{bind-attr class="focused:focused"}}>
+<div {{bind-attr class=":slider-item focused:focused disabled:disabled"}}>
     <div class="head">
         <span>{{model.value}}</span>
         {{input value=model.value type="text" class="input-mini" focus-out="focusOut" focus-in="focusIn" }}

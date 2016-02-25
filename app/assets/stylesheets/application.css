@@ -148,7 +148,10 @@ label {
     padding: 0 4px;
     text-align: center;
     font-weight: 700;
-    margin-bottom: 10px
+    margin-bottom: 10px;
+}
+.bsc-slider .slider-item.disabled .head {
+    color: #bbb
 }
 .bsc-slider .slider-item .head span {
     display: block;
@@ -165,6 +168,9 @@ label {
     display: none;
     font-weight: 700;
     text-align: center;
+}
+.bsc-slider .slider-item.disabled .head input {
+    color: #bbb;
 }
 .bsc-slider .slider-item:hover .head input,
 .bsc-slider .slider-item.focused .head input {
@@ -189,6 +195,9 @@ label {
     margin-top: 10px;
     font-size: 0.8em;
     color: #5D5D5F
+}
+.bsc-slider .slider-item.disabled .size {
+    color: #bbb;
 }
 .bsc-slider .slider-item .size span {
     display: block;
