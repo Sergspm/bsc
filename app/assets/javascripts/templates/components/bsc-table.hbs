@@ -12,8 +12,8 @@
             <tr>
                 <td>{{incr _view.contentIndex}}</td>
                 <td>{{row.readableName}}</td>
-                <td>{{row.avg}}</td>
-                <td>
+                <td class="nowrap">{{row.avg}}</td>
+                <td class="nowrap">
                     {{#link-to 'configurations.edit' row.id class="btn" title="Edit configuration" data-toggle="tooltip"}}<i class="fa fa-edit"></i>{{/link-to}}
                     <button class="btn remove" title="Delete configuration" data-toggle="tooltip" {{action "confirmRemoveConfiguration" row on="click"}}><i class="fa fa-times"></i></button>
                 </td>

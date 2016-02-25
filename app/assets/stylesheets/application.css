@@ -23,6 +23,9 @@ label {
 .bsc-table td {
     vertical-align: middle;
 }
+.bsc-table td.nowrap {
+    white-space: nowrap;
+}
 .bsc-table .btn {
     width: 40px;
     -webkit-box-sizing: border-box;
