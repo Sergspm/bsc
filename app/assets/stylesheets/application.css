@@ -20,6 +20,10 @@ label {
     cursor: default;
 }
 
+.bsc-table td {
+    vertical-align: middle;
+}
+
 .bsc-modal {
     width: 700px;
     margin: 0 auto;
