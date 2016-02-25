@@ -107,6 +107,10 @@ label {
        -moz-box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.4);
             box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.4);
     position: relative;
+    width: 18px;
+    height: 18px;
+    margin-left: -4px;
+    margin-top: -9px;
 }
 .bsc-slider .slider-item .slide .slider-handle:after {
     content: "";
