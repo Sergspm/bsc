@@ -6,6 +6,8 @@ App.BscTableComponent = Ember.Component.extend
 
     confirmedToRemove: null
 
+    isRemovedProcess: false
+
     notifyType: ''
     notifyMessage: ''
     notifyExtra: []
@@ -25,16 +27,19 @@ App.BscTableComponent = Ember.Component.extend
             @set('confirmedToRemove', null)
 
         removeConfiguration: () ->
-            self = @
-            done = (type, message) ->
-                self.set('notifyType', type)
-                self.set('notifyMessage', message)
-                self.set('confirmedToRemove', null)
-                self.rerender()
-            configuration = @get('confirmedToRemove')
-            configuration.deleteRecord()
-            configuration.save().then( (() ->
-                done('success', 'Configuration successfully deleted')
-            ), ( () ->
-                done('error', 'The configuration was deleted earlier')
-             ))
+            unless @get('isRemovedProcess')
+                self = @
+                done = (type, message) ->
+                    self.set('notifyType', type)
+                    self.set('notifyMessage', message)
+                    self.set('confirmedToRemove', null)
+                    self.set('isRemovedProcess', false)
+                    self.rerender()
+                @set('isRemovedProcess', true)
+                configuration = @get('confirmedToRemove')
+                configuration.deleteRecord()
+                configuration.save().then( (() ->
+                    done('success', 'Configuration successfully deleted')
+                ), ( () ->
+                    done('error', 'The configuration was deleted earlier')
+                ))

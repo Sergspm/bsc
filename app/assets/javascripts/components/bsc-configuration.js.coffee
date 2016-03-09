@@ -19,6 +19,8 @@ App.BscConfigurationComponent = Ember.Component.extend
     notifyMessage: ''
     notifyExtra: []
 
+    isSavingProcess: false
+
     typesLabels: [
         { type: 'constant', label: 'constant block sizes' }
         { type: 'random',   label: 'random block sizes distribution' }
@@ -176,30 +178,33 @@ App.BscConfigurationComponent = Ember.Component.extend
             @recheckAvailable(currentSlider)
 
         saveConfiguration: () ->
-            errorMessage = null
-            if @get('model.isBinType')
-                errorMessage = 'Total percentage must be a 100' unless @get('model').isBinValid()
-            if @get('model.isRandomType')
-                errorMessage = 'Random must have a non zero values and "from" must be greater than "to"' unless @get('model').isRandomValid()
-            unless errorMessage
-                self = @
-                @get('model').save().then(( (configuration) ->
-                    self.sendAction('onGoBack', self)
-                    self.set('notifyType', 'success')
-                    self.set('notifyMessage', 'Configuration successfully saved')
-                ), ( (xhr) ->
-                    list = []
-                    for field, messages of xhr.responseJSON.errors
-                        messages.forEach((message) ->
-                            list.push(message)
-                        )
-                    self.set('notifyType', 'error')
-                    self.set('notifyMessage', 'Fail saving configuration:')
-                    self.set('notifyExtra', list)
-                ))
-            else
-                @set('notifyType', 'error')
-                @set('notifyMessage', errorMessage)
+            unless @get('isSavingProcess')
+                errorMessage = null
+                if @get('model.isBinType')
+                    errorMessage = 'Total percentage must be a 100' unless @get('model').isBinValid()
+                if @get('model.isRandomType')
+                    errorMessage = 'Random must have a non zero values and "from" must be greater than "to"' unless @get('model').isRandomValid()
+                unless errorMessage
+                    self = @
+                    @set('isSavingProcess', true)
+                    @get('model').save().then(( (configuration) ->
+                        self.sendAction('onGoBack', self)
+                        self.set('notifyType', 'success')
+                        self.set('notifyMessage', 'Configuration successfully saved')
+                    ), ( (xhr) ->
+                        list = []
+                        for field, messages of xhr.responseJSON.errors
+                            messages.forEach((message) ->
+                                list.push(message)
+                            )
+                        self.set('notifyType', 'error')
+                        self.set('notifyMessage', 'Fail saving configuration:')
+                        self.set('notifyExtra', list)
+                        self.set('isSavingProcess', true)
+                    ))
+                else
+                    @set('notifyType', 'error')
+                    @set('notifyMessage', errorMessage)
 
         addBin: () ->
             err = @addNewBinErrorCode()
