@@ -13,8 +13,6 @@ App.BscTableComponent = Ember.Component.extend
     didInsertElement: () ->
         @$().find('[data-toggle="tooltip"]').tooltip()
 
-    hasConfirmedToRemove: Ember.computed.bool('confirmedToRemove')
-
     hasError: Ember.computed.bool('errorMessage')
 
     hasSuccess: Ember.computed.bool('successMessage')
@@ -28,14 +26,15 @@ App.BscTableComponent = Ember.Component.extend
 
         removeConfiguration: () ->
             self = @
+            done = (type, message) ->
+                self.set('notifyType', type)
+                self.set('notifyMessage', message)
+                self.set('confirmedToRemove', null)
+                self.rerender()
             configuration = @get('confirmedToRemove')
             configuration.deleteRecord()
             configuration.save().then( (() ->
-                self.set('notifyType', 'success')
-                self.set('notifyMessage', 'Configuration successfully deleted')
-                self.set('confirmedToRemove', null)
+                done('success', 'Configuration successfully deleted')
             ), ( () ->
-                self.set('notifyType', 'error')
-                self.set('notifyMessage', 'The configuration was deleted earlier')
-                self.set('confirmedToRemove', null)
+                done('error', 'The configuration was deleted earlier')
              ))
