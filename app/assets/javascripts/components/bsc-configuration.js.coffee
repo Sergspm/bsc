@@ -1,5 +1,7 @@
 
 # Duplicate issue: https://github.com/emberjs/data/issues/1829
+# 12345678901234 KB
+
 
 App.BscConfigurationComponent = Ember.Component.extend
     classNames: [ 'bsc-configuration' ]
@@ -120,12 +122,6 @@ App.BscConfigurationComponent = Ember.Component.extend
         @set(propertyName, parsed) unless value + '' is parsed + ''
     ).observes('model.randomFromValue', 'model.randomToValue')
 
-    changeAddBinValue: ( (view, property) ->
-        value = @get(property)
-        parsed = parseInt(value) || 0
-        @set(property, parsed) unless value + '' is parsed + ''
-    ).observes('addBinValue')
-
     watchInSliders: (() ->
         @get('model.sliders').forEach((slide) ->
             slide.deleteRecord() if slide?.get('toDelete')
@@ -137,20 +133,19 @@ App.BscConfigurationComponent = Ember.Component.extend
     ).observes('setSliderMaximum')
 
     isAddBinButtonDisabled: (() ->
+        @addNewBinErrorCode() != ''
+    ).property('addBinValue', 'addBinUnit', 'model.sliders.[]')
+
+    addNewBinErrorCode: () ->
         size = @get('addBinValue')
         unit = @get('addBinUnit')
-        unless size is ''
-            unless @get('model.sliders').length >= @get('maxSliders')
-                factor = { b: 1, kb: 1024, mb: 1024 * 1024, gb: 1024 * 1024 * 1024 }
-                if @get('model').getCanonicalSlidersSizes().indexOf(size * factor[unit]) is -1
-                    return false
-                else
-                    return true
-            else
-                return true
-        else
-            return true
-    ).property('addBinValue', 'addBinUnit', 'model.sliders.[]')
+        factor = { b: 1, kb: 1024, mb: 1024 * 1024, gb: 1024 * 1024 * 1024 }
+        return 'empty' if size is ''
+        return 'too-long' if size.length > 14
+        return 'invalid' unless isFinite(parseInt(size))
+        return 'max-sliders' if @get('model.sliders').length >= @get('maxSliders')
+        return 'exists' if @get('model').getCanonicalSlidersSizes().indexOf(size * factor[unit]) >= 0
+        ''
 
     actions:
         goBack: () ->
@@ -207,20 +202,19 @@ App.BscConfigurationComponent = Ember.Component.extend
                 @set('notifyMessage', errorMessage)
 
         addBin: () ->
-            unless (size = @get('addBinValue')) is ''
-                unless @get('model.sliders').length >= @get('maxSliders')
-                    unit = @get('addBinUnit')
-                    factor = { b: 1, kb: 1024, mb: 1024 * 1024, gb: 1024 * 1024 * 1024 }
-                    if @get('model').getCanonicalSlidersSizes().indexOf(size * factor[unit]) is -1
-                        @get('model').addSlider({
-                            size: size
-                            unit: @get('addBinUnit')
-                            value: 0
-                        })
-                        @set('addBinValue', '')
-                    else
-                        @set('notifyType', 'error')
-                        @set('notifyMessage', 'You can not set already existed size')
-                else
+            err = @addNewBinErrorCode()
+            if err == ''
+                @get('model').addSlider({
+                    size: @get('addBinValue')
+                    unit: @get('addBinUnit')
+                    value: 0
+                })
+                @set('addBinValue', '')
+            else
+                switch err
+                    when 'max-sliders' then err = 'The limit of sliders has been reached'
+                    when 'exists' then err = 'You can not set already existed size'
+                    else err = ''
+                if err != ''
                     @set('notifyType', 'error')
-                    @set('notifyMessage', 'The limit of sliders has been reached')
+                    @set('notifyMessage', err)

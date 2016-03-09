@@ -95,6 +95,14 @@ label {
     margin-bottom: 20px;
 }
 
+.bsc-configuration .modal-body {
+    max-height: none;
+}
+
+.bsc-sliders-outer {
+    padding-bottom: 60px;
+}
+
 .bsc-slider {
     padding-top: 20px;
 }
@@ -219,11 +227,20 @@ label {
 }
 .bsc-slider .slider-item .size span {
     display: block;
+    white-space: nowrap;
+    position: relative;
     -webkit-transform: rotate(-45deg);
-            -moz-transform: rotate(-45deg);
-             -ms-transform: rotate(-45deg);
-              -o-transform: rotate(-45deg);
-         transform: rotate(-45deg);
+       -moz-transform: rotate(-45deg);
+        -ms-transform: rotate(-45deg);
+         -o-transform: rotate(-45deg);
+            transform: rotate(-45deg);
+}
+.bsc-slider .slider-item .size span em {
+    font-style: normal;
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 .bsc-slider .slider-item .remove {
     margin: 12px 0 0 3px;
