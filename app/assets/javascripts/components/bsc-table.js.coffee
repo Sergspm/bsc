@@ -19,12 +19,16 @@ App.BscTableComponent = Ember.Component.extend
 
     hasSuccess: Ember.computed.bool('successMessage')
 
+    isChrome: ( () ->
+        /Chrome/.test(navigator.userAgent)
+    ).property()
+
     actions:
         confirmRemoveConfiguration: (configuration) ->
             @set('confirmedToRemove', configuration)
 
         stopRemove: () ->
-            @set('confirmedToRemove', null)
+            #@set('confirmedToRemove', null)
 
         removeConfiguration: () ->
             self = @

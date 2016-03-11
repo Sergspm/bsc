@@ -8,6 +8,7 @@ App.Configuration = DS.Model.extend
 
     _id:             DS.attr('string', { defaultValue: ''      })
     confType:        DS.attr('string', { defaultValue: 'bins'  })
+    confName:        DS.attr('string', { defaultValue: ''      })
     constantSize:    DS.attr('string', { defaultValue: '512 b' })
     randomFromUnit:  DS.attr('string', { defaultValue: 'kb'    })
     randomToUnit:    DS.attr('string', { defaultValue: 'kb'    })
@@ -16,6 +17,14 @@ App.Configuration = DS.Model.extend
 
     addSlider: (conf) ->
         @get('sliders').pushObject(@store.createRecord('slider', conf))
+
+    doSmth: ( () ->
+        l = 0
+        noop = () ->
+            l++
+        noop() while l < 15000000
+        ''
+    ).property('_id')
 
     readableName: ( () ->
         name = ''

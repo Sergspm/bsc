@@ -17,6 +17,17 @@
  */
 
 
+.bsc-table tbody td {
+    vertical-align: middle;
+}
+.bsc-table tbody td.na {
+    vertical-align: top;
+}
+
+.bsc-select-type .ll {
+    margin-left: 30px;
+}
+
 
 .bsc-modal {
     width: 700px;

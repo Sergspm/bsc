@@ -9,6 +9,7 @@ class BinConfiguration
   validates :random_to_unit, inclusion: { in: %w(b kb mb gb), message: "Unknown unit of random to unit: %{value}" }
 
   field :conf_type, type: String
+  field :conf_name, type: String
   field :constant_size, type: String
   field :random_from_unit, type: String
   field :random_to_unit, type: String

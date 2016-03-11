@@ -10,8 +10,17 @@
 
 <div class="modal-body">
 
+    <div class="row form-horizontal">
+        <div class="control-group">
+            <label class="control-label" for="configuration-name" style="width:147px">Configuration name:</label>
+            <div class="controls">
+                {{input value=model.confName type="text" id="configuration-name" placeholder="Configuration name" tabindex="1"}}
+            </div>
+        </div>
+    </div>
+
     <div class="bsc-select-type">
-        <span>Use</span>
+        <span {{bind-attr class="isFirefox:ll"}}>Use</span>
         <div class="bsc-select">
             {{view "select"
                 content=typesLabels
@@ -36,7 +45,7 @@
     {{#if model.isRandomType}}
         <div class="bsc-random-type-fields form-inline">
             <label>From</label>
-            {{input value=model.randomFromValue type="text" class="input-mini"}}
+            {{input value=model.randomFromValue type="text" class="input-mini" tabindex="3"}}
             <div class="bsc-select">
                 {{view "select"
                     content=unitsList
@@ -46,7 +55,7 @@
                     data-toggle="select"}}
             </div>
             <label>to</label>
-            {{input value=model.randomToValue type="text" class="input-mini"}}
+            {{input value=model.randomToValue type="text" class="input-mini" tabindex="2"}}
             <div class="bsc-select">
                 {{view "select"
                     content=unitsList

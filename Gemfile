@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'rack-cache', :git => 'git@github.com:rtomayko/rack-cache.git', :tag => 'v1.6.0'
 gem 'rails', '3.2.17'
 
 # Bundle edge Rails instead:

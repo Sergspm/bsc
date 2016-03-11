@@ -90,6 +90,10 @@ App.BscConfigurationComponent = Ember.Component.extend
         @set('availableForUse', available)
         currentSlider.setValue(currentSlider.getValue() - delta) if delta > 0 && currentSlider
 
+    isFirefox: ( () ->
+        /Firefox/.test(navigator.userAgent) && @get('isEdit')
+    ).property()
+
     availableForUseComputed: (() ->
         available = @get('availableForUse')
         percentage = @get('setSliderMaximum')
@@ -134,11 +138,11 @@ App.BscConfigurationComponent = Ember.Component.extend
         @storeRandValues()
     ).observes('model.randomFromValue', 'model.randomToValue', 'model.randomFromUnit', 'model.randomToUnit')
 
-    changeAddBinValue: ( (view, property) ->
+    ###changeAddBinValue: ( (view, property) ->
         value = parseInt(@get(property))
         value = '' unless isFinite(value)
         @set(property, value)
-    ).observes('addBinValue')
+    ).observes('addBinValue')###
 
     watchInSliders: (() ->
         @get('model.sliders').forEach((slide) ->
@@ -169,20 +173,27 @@ App.BscConfigurationComponent = Ember.Component.extend
 
         saveConfiguration: () ->
             self = @
-            @get('model').save().then(( (configuration) ->
-                self.sendAction('onGoBack', self)
-                self.set('notifyType', 'success')
-                self.set('notifyMessage', 'Configuration successfully saved')
-            ), ( (xhr) ->
-                list = []
-                for field, messages of xhr.responseJSON.errors
-                    messages.forEach((message) ->
-                        list.push(message)
-                    )
-                self.set('notifyType', 'error')
-                self.set('notifyMessage', 'Fail saving configuration:')
-                self.set('notifyExtra', list)
-            ))
+            @get('model.store').findAll('configuration').then( (list) ->
+                if list.content.length <= 35
+                    self.get('model').save().then(( (configuration) ->
+                        self.sendAction('onGoBack', self)
+                        self.set('notifyType', 'success')
+                        self.set('notifyMessage', 'Configuration successfully saved')
+                    ), ( (xhr) ->
+                        list = []
+                        for field, messages of xhr.responseJSON.errors
+                            messages.forEach((message) ->
+                                list.push(message)
+                            )
+                        self.set('notifyType', 'error')
+                        self.set('notifyMessage', 'Fail saving configuration:')
+                        self.set('notifyExtra', list)
+                    ))
+                else
+                    self.sendAction('onGoBack', self)
+                    self.set('notifyType', 'success')
+                    self.set('notifyMessage', 'Configuration successfully saved')
+            )
 
         addBin: () ->
             unless (size = @get('addBinValue')) is ''
