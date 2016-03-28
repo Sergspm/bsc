@@ -197,7 +197,8 @@
     text-align: center;
     margin-top: 10px;
     font-size: 0.8em;
-    color: #5D5D5F
+    color: #5D5D5F;
+    white-space: nowrap;
 }
 .bsc-slider .slider-item .size span {
     display: block;
@@ -307,4 +308,5 @@
 
 .bsc-configuration .modal-body {
     overflow: visible;
+    padding-bottom: 50px;
 }
