@@ -163,6 +163,8 @@ App.BscConfigurationComponent = Ember.Component.extend
                 @get('model.sliders').forEach((slider) ->
                     slider.rollback()
                 )
+            else
+                @get('model').deleteRecord()
             @sendAction('onGoBack', @)
 
         onSlideRemove: (slider) ->
@@ -190,6 +192,7 @@ App.BscConfigurationComponent = Ember.Component.extend
                         self.set('notifyExtra', list)
                     ))
                 else
+                    self.get('model').deleteRecord()
                     self.sendAction('onGoBack', self)
                     self.set('notifyType', 'success')
                     self.set('notifyMessage', 'Configuration successfully saved')
